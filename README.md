@@ -1,4 +1,4 @@
-# Identidicator
+# Identificator
 	Helper para ajudar na implementação de hashCode, toString e equals.
 	
     Para usar para annotar os attibutos com Identificator:
@@ -17,7 +17,13 @@
 		<version>0.1.0</version>
 	</dependency>
 ```
-	
+	E adicionar o repositório
+```
+	<repository>
+		<id>mvn-repo-releases</id>
+		<url>https://raw.github.com/clairton/mvn-repo.git/releases</url>
+	</repository>
+```	
 	E repositório:
 ```
 	<repository>
