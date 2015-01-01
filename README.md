@@ -1,7 +1,7 @@
 # Identificator
 Helper para ajudar na implementação de hashCode, toString e equals.
 	
-Para usar para annotar os attibutos com @Identificator 
+Para usar annotar os attibutos com @Identificator 
 extendendo de Identificable, a anotação @Identificator pode receber um parametro limitando para quais métodos ele será usado, por exemplo:
 ```java
 public class Test extends Identificable{	
