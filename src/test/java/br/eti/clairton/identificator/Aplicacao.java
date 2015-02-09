@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlAnyAttribute;
 public class Aplicacao extends Identificable implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private @Identificator Collection<String> recursos = new HashSet<>();
+	private @Identificator Collection<String> recursos = new HashSet<String>();
 
 	private @Identificator String nome;
 
