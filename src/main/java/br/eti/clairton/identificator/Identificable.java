@@ -28,6 +28,10 @@ public class Identificable implements Cloneable {
 		protected boolean isUseShortClassName() {
 			return Boolean.TRUE;
 		}
+
+		protected boolean isUseIdentityHashCode() {
+			return Boolean.TRUE;
+		};
 	};
 
 	/**
@@ -81,7 +85,7 @@ public class Identificable implements Cloneable {
 	private static class MatcherField implements Matcher<Field> {
 		private final Type type;
 
-		public MatcherField(Type type) {
+		public MatcherField(final Type type) {
 			super();
 			this.type = type;
 		}
@@ -91,7 +95,7 @@ public class Identificable implements Cloneable {
 			if (!element.isAnnotationPresent(Identificator.class)) {
 				return false;
 			} else {
-				Identificator identificator = element
+				final Identificator identificator = element
 						.getAnnotation(Identificator.class);
 				return Arrays.asList(identificator.value()).contains(type);
 			}
