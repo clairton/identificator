@@ -1,4 +1,4 @@
-# Identificator
+# identificator [![Build Status](https://drone.io/github.com/clairton/identificator/status.png)](https://drone.io/github.com/clairton/identificator/latest)
 Helper para ajudar na implementação de hashCode, toString e equals.
 	
 Para usar annotar os attibutos com @Identificator 
