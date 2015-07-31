@@ -3,16 +3,15 @@ package br.eti.clairton.identificator;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
-import net.vidageek.mirror.dsl.Mirror;
-import net.vidageek.mirror.list.dsl.Matcher;
-import net.vidageek.mirror.list.dsl.MirrorList;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import br.eti.clairton.identificator.Identificator.Type;
+import net.vidageek.mirror.dsl.Mirror;
+import net.vidageek.mirror.list.dsl.Matcher;
+import net.vidageek.mirror.list.dsl.MirrorList;
 
 public class Identificable implements Cloneable {
 	private transient final static Mirror MIRROR = new Mirror();
@@ -35,7 +34,8 @@ public class Identificable implements Cloneable {
 	};
 
 	/**
-	 * Clona o objeto. {@inheritDoc}.
+	 * Clona o objeto.<br/>
+	 * {@inheritDoc}.
 	 */
 	@Override
 	public Object clone() throws CloneNotSupportedException {
@@ -47,7 +47,16 @@ public class Identificable implements Cloneable {
 		final HashCodeBuilder builder = new HashCodeBuilder();
 		for (final Field field : retrieveFields(Type.HASHCODE)) {
 			final Object value = MIRROR.on(this).get().field(field);
-			builder.append(value);
+			final Identificator identificator = field.getAnnotation(Identificator.class);
+			if (identificator.field().length > 0) {
+				for (final String f : identificator.field()) {
+					final Object v = MIRROR.on(value).get().field(f);
+					builder.append(v);
+				}
+			} else {
+				builder.append(value);
+			}
+
 		}
 		return builder.toHashCode();
 	}
@@ -58,7 +67,15 @@ public class Identificable implements Cloneable {
 		for (final Field field : retrieveFields(Type.TO_STRING)) {
 			final Object value = MIRROR.on(this).get().field(field);
 			final String name = field.getName();
-			builder.append(name, value);
+			final Identificator identificator = field.getAnnotation(Identificator.class);
+			if (identificator.field().length > 0) {
+				for (final String f : identificator.field()) {
+					final Object v = MIRROR.on(value).get().field(f);
+					builder.append(name + "." + f, v);
+				}
+			} else {
+				builder.append(name, value);
+			}
 		}
 		return builder.toString();
 	}
@@ -70,7 +87,16 @@ public class Identificable implements Cloneable {
 			for (final Field field : retrieveFields(Type.EQUALS)) {
 				final Object lhs = MIRROR.on(this).get().field(field);
 				final Object rhs = MIRROR.on(obj).get().field(field);
-				builder.append(lhs, rhs);
+				final Identificator identificator = field.getAnnotation(Identificator.class);
+				if (identificator.field().length > 0) {
+					for (final String f : identificator.field()) {
+						final Object l = MIRROR.on(lhs).get().field(f);
+						final Object r = MIRROR.on(rhs).get().field(f);
+						builder.append(l, r);
+					}
+				} else {
+					builder.append(lhs, rhs);
+				}
 			}
 			return builder.isEquals();
 		}
@@ -78,8 +104,7 @@ public class Identificable implements Cloneable {
 	}
 
 	private MirrorList<Field> retrieveFields(final Type type) {
-		return MIRROR.on(getClass()).reflectAll().fields()
-				.matching(new MatcherField(type));
+		return MIRROR.on(getClass()).reflectAll().fields().matching(new MatcherField(type));
 	}
 
 	private static class MatcherField implements Matcher<Field> {
@@ -95,8 +120,7 @@ public class Identificable implements Cloneable {
 			if (!element.isAnnotationPresent(Identificator.class)) {
 				return false;
 			} else {
-				final Identificator identificator = element
-						.getAnnotation(Identificator.class);
+				final Identificator identificator = element.getAnnotation(Identificator.class);
 				return Arrays.asList(identificator.value()).contains(type);
 			}
 		}

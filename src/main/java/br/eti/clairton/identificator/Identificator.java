@@ -10,7 +10,9 @@ import java.lang.annotation.Target;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Identificator {
-	Type[] value() default { Type.TO_STRING, Type.HASHCODE, Type.EQUALS };
+	Type[]value() default { Type.TO_STRING, Type.HASHCODE, Type.EQUALS };
+
+	String[]field() default {};
 
 	enum Type {
 		TO_STRING, HASHCODE, EQUALS
