@@ -48,7 +48,7 @@ public class Identificable implements Cloneable {
 		for (final Field field : retrieveFields(Type.HASHCODE)) {
 			final Object value = MIRROR.on(this).get().field(field);
 			final Identificator identificator = field.getAnnotation(Identificator.class);
-			if (identificator.field().length > 0) {
+			if (identificator.field().length > 0 && value != null) {
 				for (final String f : identificator.field()) {
 					final Object v = MIRROR.on(value).get().field(f);
 					builder.append(v);
@@ -68,7 +68,7 @@ public class Identificable implements Cloneable {
 			final Object value = MIRROR.on(this).get().field(field);
 			final String name = field.getName();
 			final Identificator identificator = field.getAnnotation(Identificator.class);
-			if (identificator.field().length > 0) {
+			if (identificator.field().length > 0 && value != null) {
 				for (final String f : identificator.field()) {
 					final Object v = MIRROR.on(value).get().field(f);
 					builder.append(name + "." + f, v);
@@ -90,8 +90,18 @@ public class Identificable implements Cloneable {
 				final Identificator identificator = field.getAnnotation(Identificator.class);
 				if (identificator.field().length > 0) {
 					for (final String f : identificator.field()) {
-						final Object l = MIRROR.on(lhs).get().field(f);
-						final Object r = MIRROR.on(rhs).get().field(f);
+						final Object l;
+						if (lhs != null) {
+							l = MIRROR.on(lhs).get().field(f);
+						} else {
+							l = null;
+						}
+						final Object r;
+						if (rhs != null) {
+							r = MIRROR.on(rhs).get().field(f);
+						} else {
+							r = null;
+						}
 						builder.append(l, r);
 					}
 				} else {
