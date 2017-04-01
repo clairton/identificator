@@ -2,4 +2,4 @@ language: java
 jdk:
   - oraclejdk6
 
-script: "mvn deploy --settings settings.xml"
+script: "mvn clean deploy --settings settings.xml"
