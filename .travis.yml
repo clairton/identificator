@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - oraclejdk6  
+  - openjdk6  
 
 script: "mvn clean package --settings settings.xml"
 
