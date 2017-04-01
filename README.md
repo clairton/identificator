@@ -23,13 +23,5 @@ Download através do maven, dependência:
 <dependency>
 	<groupId>br.eti.clairton</groupId>
     <artifactId>identificator</artifactId>
-	<version>0.2.0</version>
+	<version>1.2.0</version>
 </dependency>
-```
-E adicionar o repositório
-```xml
-<repository>
-	<id>mvn-repo-releases</id>
-	<url>https://raw.github.com/clairton/mvn-repo/releases</url>
-</repository>
-```
