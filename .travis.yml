@@ -5,5 +5,5 @@ jdk:
 script: "mvn clean package --settings settings.xml"
 
 "after_success": [
-  "mvn deploy -DskipTests"
+  "mvn clean deploy -DskipTests --settings settings.xml"
 ]
