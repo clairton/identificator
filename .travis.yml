@@ -1,5 +1,9 @@
 language: java
 jdk:
-  - oraclejdk6
+  - oraclejdk6  
 
-script: "mvn clean deploy --settings settings.xml"
+script: "mvn clean package --settings settings.xml"
+
+"after_success": [
+  "mvn deploy -DskipTests"
+]
