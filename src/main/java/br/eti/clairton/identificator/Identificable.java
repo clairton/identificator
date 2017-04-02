@@ -34,7 +34,7 @@ public class Identificable implements Cloneable {
 	};
 
 	/**
-	 * Clona o objeto.<br/>
+	 * Clona o objeto.
 	 * {@inheritDoc}.
 	 */
 	@Override
