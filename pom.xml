@@ -26,6 +26,13 @@
 			<organizationUrl>http://clairton.eti.br/</organizationUrl>
 		</developer>
 	</developers>
+	
+	<properties>
+		<gpg.executable>gpg</gpg.executable>
+        <gpg.keyname>clairton.rodrigo@gmail.com</gpg.keyname>
+        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>net.vidageek</groupId>
@@ -79,6 +86,19 @@
 				<configuration>
 					<additionalparam>-Xdoclint:none</additionalparam>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
